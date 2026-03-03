@@ -3,14 +3,9 @@ from job04 import access_database, point_cursor, close_everything_properly
 
 def get_total_surface(cursor) : 
 
-    cursor.execute("SELECT superficie FROM etage")
+    cursor.execute("SELECT SUM(superficie) FROM etage")
 
-    results = cursor.fetchall()
-
-    total_surface = 0
-    for element in results : 
-        singular_surface = element[0]
-        total_surface += singular_surface
+    total_surface = cursor.fetchone()[0]
 
     print(f"La superficie totale de la plateforme est {total_surface} m2")
     return total_surface 

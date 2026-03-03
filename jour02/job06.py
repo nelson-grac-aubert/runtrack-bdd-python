@@ -3,14 +3,9 @@ from job04 import access_database, point_cursor, close_everything_properly
 
 def get_total_capacity(cursor) : 
     
-    cursor.execute("SELECT capacite FROM salle")
+    cursor.execute("SELECT SUM(capacite) FROM salle")
 
-    results = cursor.fetchall()
-
-    total_capacity = 0 
-    for element in results : 
-        singular_capacity = element[0]
-        total_capacity += singular_capacity
+    total_capacity = cursor.fetchone()[0]
 
     print(f"La capacité totale des salles de la plateforme est de {total_capacity} personnes")
 
