@@ -1,5 +1,6 @@
 import mysql.connector 
 from job04 import access_database, point_cursor, close_everything_properly
+from classe_employe import Employe
 
 def get_rich_employees(cursor) : 
 
@@ -42,6 +43,11 @@ if __name__ == "__main__" :
 
     job07_database = access_database("job07")
     job07_cursor = point_cursor(job07_database)
-    get_rich_employees(job07_cursor)
-    get_all_employees_with_service_name(job07_cursor)
+    # get_rich_employees(job07_cursor)
+    # get_all_employees_with_service_name(job07_cursor)
+
+    employee_crud = Employe()
+    employee_crud.read_all_employees()
+    employee_crud.read_one_employee(2)
+
     close_everything_properly(job07_cursor, job07_database)
