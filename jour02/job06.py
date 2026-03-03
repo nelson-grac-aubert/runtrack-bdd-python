@@ -1,26 +1,22 @@
 import mysql.connector 
+from job04 import access_database, point_cursor, close_everything_properly
 
-database = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Misstouille83!sql",
-    database="LaPlateforme"
-)
+def get_total_capacity(cursor) : 
+    
+    cursor.execute("SELECT capacite FROM salle")
 
-cursor = database.cursor()
+    results = cursor.fetchall()
 
-cursor.execute("SELECT capacite FROM salle")
+    total_capacity = 0 
+    for element in results : 
+        singular_capacity = element[0]
+        total_capacity += singular_capacity
 
-results = cursor.fetchall()
+    print(f"La capacité totale des salles de la plateforme est de {total_capacity} personnes")
 
-capacite_totale = 0 
-for i in results : 
-    capacite = i[0]
-    capacite_totale += capacite
+if __name__ == "__main__" : 
 
-print(results)
-print(f"La capacité totale des salles de la plateforme est de {capacite_totale} personnes")
-
-cursor.close()
-
-database.close()
+    la_plateforme_database = access_database("LaPlateforme")
+    la_plateforme_cursor = point_cursor(la_plateforme_database)
+    get_total_capacity(la_plateforme_cursor)
+    close_everything_properly(la_plateforme_cursor, la_plateforme_database)

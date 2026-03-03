@@ -1,26 +1,23 @@
 import mysql.connector 
+from job04 import access_database, point_cursor, close_everything_properly
 
-database = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Misstouille83!sql",
-    database="LaPlateforme"
-)
+def get_total_surface(cursor) : 
 
-cursor = database.cursor()
+    cursor.execute("SELECT superficie FROM etage")
 
-cursor.execute("SELECT superficie FROM etage")
+    results = cursor.fetchall()
 
-results = cursor.fetchall()
+    total_surface = 0
+    for element in results : 
+        singular_surface = element[0]
+        total_surface += singular_surface
 
-superficie = 0
-for i in results : 
-    surface = i[0]
-    superficie += surface
+    print(f"La superficie totale de la plateforme est {total_surface} m2")
+    return total_surface 
 
-print(results)
-print(f"La superficie totale de la plateforme est {superficie} m2")
+if __name__ == "__main__" : 
 
-cursor.close()
-
-database.close()
+    la_plateforme_database = access_database("LaPlateforme")
+    la_plateforme_cursor = point_cursor(la_plateforme_database)
+    get_total_surface(la_plateforme_cursor)
+    close_everything_properly(la_plateforme_cursor, la_plateforme_database)
