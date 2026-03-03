@@ -11,11 +11,24 @@ def get_rich_employees(cursor) :
     for element in results : 
         print(f"{element[1]} {element[0]} gagne plus de 3000e par mois")
 
+def get_all_employees_with_service_id(cursor):
+
+    my_first_inner_join = """SELECT employe.nom, employe.prenom, service.nom 
+                             FROM employe
+                             INNER JOIN service ON employe.id_service = service.id"""
+
+    cursor.execute(my_first_inner_join)
+    results = cursor.fetchall()
+
+    print("---------------- ALL EMPLOYEES AND THEIR SERVICE ----------------")
+    for nom, prenom, nom_service in results:
+        print(f"{prenom} {nom} travaille dans le service {nom_service}")
+
 def get_all_employees_with_service_name(cursor):
 
     my_first_inner_join = """SELECT employe.nom, employe.prenom, service.nom 
-               FROM employe
-               INNER JOIN service ON employe.id_service = service.id"""
+                             FROM employe
+                             INNER JOIN service ON employe.id_service = service.id"""
 
     cursor.execute(my_first_inner_join)
     results = cursor.fetchall()
