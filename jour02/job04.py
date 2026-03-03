@@ -1,11 +1,11 @@
 import mysql.connector 
 
-def access_database(database_name) : 
-
+def access_database(database_name, host_name="localhost", user_name="root", pass_word="Misstouille83!sql") : 
+    
     database = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "Misstouille83!sql",
+        host = host_name,
+        user = user_name,
+        password = pass_word,
         database = database_name
     )
 
@@ -34,3 +34,6 @@ if __name__ == "__main__" :
     la_plateforme_cursor = point_cursor(la_plateforme_database)
     get_name_and_capacities(la_plateforme_cursor)
     close_everything_properly(la_plateforme_cursor, la_plateforme_database)
+
+    # print(type(la_plateforme_database)) : <class 'mysql.connector.connection_cext.CMySQLConnection'>
+    # print(type(la_plateforme_cursor)) : <class 'mysql.connector.cursor_cext.CMySQLCursor'>
