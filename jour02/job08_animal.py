@@ -9,7 +9,7 @@ class Animal:
         self.db = access_database("myzoo")
         self.cursor = point_cursor(self.db)
 
-    def _input(self, msg, expected_type=str):
+    def input(self, msg, expected_type=str):
         while True:
             value = input(msg)
             if expected_type == str:
@@ -23,11 +23,11 @@ class Animal:
                 print(f"Expected {expected_type.__name__}.")
 
     def create_animal(self):
-        name = self._input("Animal name: ")
-        race = self._input("Race: ")
-        cage_id = self._input("Cage ID: ", int)
-        birth = self._input("Birth date (YYYY-MM-DD): ")
-        country = self._input("Country of origin: ")
+        name = self.input("Animal name: ")
+        race = self.input("Race: ")
+        cage_id = self.input("Cage ID: ", int)
+        birth = self.input("Birth date (YYYY-MM-DD): ")
+        country = self.input("Country of origin: ")
 
         query = """
             INSERT INTO animal (nom, race, cage_id, date_naissance, pays_origine)
@@ -61,10 +61,10 @@ class Animal:
                 print(f"Cage {cage_id} ({superficie} m²): EMPTY")
 
     def update_animal(self):
-        animal_id = self._input("Animal ID: ", int)
+        animal_id = self.input("Animal ID: ", int)
 
         print("\n1. Name\n2. Race\n3. Cage ID\n4. Birth date\n5. Country")
-        choice = self._input("Field: ")
+        choice = self.input("Field: ")
 
         fields = {
             "1": ("nom", str),
@@ -79,7 +79,7 @@ class Animal:
             return
 
         column, t = fields[choice]
-        new_value = self._input(f"New {column}: ", t)
+        new_value = self.input(f"New {column}: ", t)
 
         query = f"UPDATE animal SET {column} = %s WHERE id = %s"
         self.cursor.execute(query, (new_value, animal_id))
@@ -88,7 +88,7 @@ class Animal:
         print("Animal updated.")
 
     def delete_animal(self):
-        animal_id = self._input("Animal ID: ", int)
+        animal_id = self.input("Animal ID: ", int)
         self.cursor.execute("DELETE FROM animal WHERE id = %s", (animal_id,))
         self.db.commit()
         print("Animal deleted.")

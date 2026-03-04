@@ -12,13 +12,13 @@ def create_database():
         cursor = connection.cursor()
 
         cursor.execute("CREATE DATABASE myzoo")
-        print("✔ Base de données 'myzoo' créée avec succès.")
+        print("Base de données 'myzoo' créée avec succès.")
 
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_DB_CREATE_EXISTS:
-            print("⚠ La base de données 'myzoo' existe déjà.")
+            print("La base de données 'myzoo' existe déjà.")
         else:
-            print(f"❌ Erreur lors de la création de la base : {err}")
+            print(f"Erreur lors de la création de la base : {err}")
 
     finally:
         cursor.close()
@@ -63,10 +63,10 @@ def create_tables():
 
         for name, query in TABLES.items():
             cursor.execute(query)
-            print(f"✔ Table '{name}' vérifiée/créée.")
+            print(f"Table '{name}' vérifiée/créée.")
 
     except mysql.connector.Error as err:
-        print(f"❌ Erreur lors de la création des tables : {err}")
+        print(f"Erreur lors de la création des tables : {err}")
 
 if __name__ == "__main__":
     create_database()
