@@ -39,15 +39,78 @@ def get_all_employees_with_service_name(cursor):
         print(f"{prenom} {nom} travaille dans le service {nom_service}")
 
 
-if __name__ == "__main__" : 
+def show_all(emp: Employe):
+    emp.read_all_employees()
 
-    job07_database = access_database("job07")
-    job07_cursor = point_cursor(job07_database)
-    # get_rich_employees(job07_cursor)
-    # get_all_employees_with_service_name(job07_cursor)
+def show_one(emp: Employe):
+    try:
+        employee_id = int(input("Employee ID: "))
+        emp.read_one_employee(employee_id)
+    except ValueError:
+        print("Invalid ID. Please enter a number.")
 
-    employee_crud = Employe()
-    employee_crud.read_all_employees()
-    employee_crud.read_one_employee(2)
+def create_employee(emp: Employe):
+    emp.create_employee()
 
-    close_everything_properly(job07_cursor, job07_database)
+def delete_employee(emp: Employe):
+    emp.delete_employee()
+
+def edit_menu(emp: Employe):
+    while True:
+        print("\n----------- EDIT EMPLOYEE -----------")
+        print("1. Edit last name")
+        print("2. Edit first name")
+        print("3. Edit salary")
+        print("4. Edit service ID")
+        print("0. Back")
+        print("-------------------------------------")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            emp.edit_employee_name()
+        elif choice == "2":
+            emp.edit_employee_first_name()
+        elif choice == "3":
+            emp.edit_employee_salary()
+        elif choice == "4":
+            emp.edit_employee_service_id()
+        elif choice == "0":
+            return
+        else:
+            print("Invalid option.")
+
+def main():
+    emp = Employe()
+
+    while True:
+        print("\n================ EMPLOYEE MANAGEMENT ================")
+        print("1. Show all employees")
+        print("2. Show one employee")
+        print("3. Create new employee")
+        print("4. Edit employee")
+        print("5. Delete employee")
+        print("0. Exit")
+        print("=====================================================")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            show_all(emp)
+        elif choice == "2":
+            show_one(emp)
+        elif choice == "3":
+            create_employee(emp)
+        elif choice == "4":
+            edit_menu(emp)
+        elif choice == "5":
+            delete_employee(emp)
+        elif choice == "0":
+            print("Goodbye.")
+            break
+        else:
+            print("Invalid option. Please choose a valid number.")
+
+
+if __name__ == "__main__":
+    main()
