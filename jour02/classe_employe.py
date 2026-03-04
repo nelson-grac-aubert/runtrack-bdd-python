@@ -13,12 +13,17 @@ class Employe:
         self.__database = access_database("job07")
         self.__cursor = point_cursor(self.__database)
 
+    def get_cursot(self) : 
+        return self.__cursor
+    def get_database(self) : 
+        return self.__database
+
     def read_all_employees(self):
         """
         Display all employees along with their associated service.
         """
         query = """
-            SELECT employe.id, employe.nom, employe.prenom, service.nom, employe.id_service
+            SELECT employe.id, employe.nom, employe.prenom, service.nom, employe.id_service, employe.salaire
             FROM employe
             INNER JOIN service ON employe.id_service = service.id
         """
@@ -27,8 +32,8 @@ class Employe:
         results = self.__cursor.fetchall()
 
         print("ALL EMPLOYEES AND THEIR SERVICE ----------------")
-        for id, nom, prenom, nom_service, service_id in results:
-            print(f"{id}. {prenom} {nom} works in service {nom_service} (service #{service_id})")
+        for id, nom, prenom, nom_service, service_id, salaire in results:
+            print(f"{id}. {prenom} {nom} works in service {nom_service} (service #{service_id}) and earns {salaire} monthly")
 
     def read_one_employee(self, employee_id):
         """
@@ -38,7 +43,7 @@ class Employe:
             employee_id (int): ID of the employee to display.
         """
         query = """
-            SELECT employe.nom, employe.prenom, service.nom, employe.id_service
+            SELECT employe.nom, employe.prenom, service.nom, employe.id_service, employe.salaire
             FROM employe
             INNER JOIN service ON employe.id_service = service.id
             WHERE employe.id = %s
@@ -49,7 +54,7 @@ class Employe:
 
         if results:
             print(f"EMPLOYEE #{employee_id} ----------------")
-            print(f"{results[1]} {results[0]} works in service {results[2]} (service #{results[3]})")
+            print(f"{results[1]} {results[0]} works in service {results[2]} (service #{results[3]}) and earns {results[4]} monthly")
         else:
             print("No employee found with this ID.")
 

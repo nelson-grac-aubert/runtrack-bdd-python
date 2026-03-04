@@ -111,6 +111,7 @@ def main():
         else:
             print("Invalid option. Please choose a valid number.")
 
-
+    close_everything_properly(emp.__cursor, emp.__database)
+    
 if __name__ == "__main__":
     main()
